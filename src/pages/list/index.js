@@ -13,7 +13,7 @@ import { Container } from './styles';
 
 class List extends Component {
   static propTypes = {
-    getBookRequest: func.isRequired,
+    getAllBooksRequest: func.isRequired,
     books: shape({
       data: arrayOf(
         shape({
@@ -30,14 +30,35 @@ class List extends Component {
   };
 
   componentDidMount() {
-    this.props.getBookRequest('design');
+    this.props.getAllBooksRequest({ search: 'design', page: 0 });
   }
 
+  handleGetMore = () => {
+    const { total, page, loading } = this.props.books;
+
+    if (loading) {
+      return;
+    }
+
+    if (total - page < 0) {
+      console.log('voce chegou ao final dos resultados');
+      return;
+    }
+    this.props.getAllBooksRequest({ search: 'design', page });
+  };
+
   render() {
-    const { data } = this.props.books;
+    const { data, total } = this.props.books;
+    console.log(this.props.books);
     return (
       <>
         <Header />
+        <div>
+          <span>{total}</span>
+          <button type="button" onClick={this.handleGetMore}>
+            click
+          </button>
+        </div>
         <Container>
           <ul>
             {data.map(book => (
