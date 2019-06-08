@@ -2,6 +2,10 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   padding: 20px 200px 0px 200px;
+  height: -moz-calc(100% - 60px);
+  height: -webkit-calc(100% - 60px);
+  height: calc(100% - 60px);
+  overflow-y: scroll;
 
   ul {
     display: flex;
