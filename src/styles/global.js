@@ -11,6 +11,9 @@ const GlobalStyle = createGlobalStyle`
     font-family: sans-serif;
     background-color: #ffe207;
   }
+  body > #root {
+    height: 100vh;
+  }
 `;
 
 export default GlobalStyle;

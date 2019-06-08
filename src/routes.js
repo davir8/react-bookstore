@@ -1,9 +1,9 @@
 import React, { Fragment } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
-import List from '../pages/list';
-import Home from '../pages/home';
-import Detail from '../pages/detail';
+import List from './pages/list';
+import Home from './pages/home';
+import Detail from './pages/detail';
 
 const Routes = () => (
   <BrowserRouter>
