@@ -31,6 +31,12 @@ export const Container = styled.div`
     padding: 5px 10px;
     border-radius: 20px;
     border: 1px solid #9494945e;
+    color: #9494945e;
+
+    &:focus-within {
+      border-color: #000;
+      color: #000;
+    }
 
     svg {
       font-size: 24px;
