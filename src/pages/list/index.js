@@ -3,17 +3,23 @@ import {
   func, shape, arrayOf, number, string,
 } from 'prop-types';
 
+import { MdAutorenew } from 'react-icons/lib/md';
+
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Link } from 'react-router-dom';
 import { Creators as BooksActions } from '../../store/ducks/books';
 
 import Header from '../../components/Header';
-import { Container } from './styles';
+import Loading from '../../components/Loading';
+
+import { Container, SubHeader } from './styles';
 
 class List extends Component {
   static propTypes = {
-    getAllBooksRequest: func.isRequired,
+    history: shape({
+      push: func,
+    }).isRequired,
+    getBooksRequest: func.isRequired,
     books: shape({
       data: arrayOf(
         shape({
@@ -30,42 +36,48 @@ class List extends Component {
   };
 
   componentDidMount() {
-    this.props.getAllBooksRequest({ search: 'design', page: 0 });
+    this.props.getBooksRequest({ search: 'design' });
   }
 
   handleGetMore = () => {
-    const { total, page, loading } = this.props.books;
+    const { totalPage, currentPage, loading } = this.props.books;
 
     if (loading) {
       return;
     }
 
-    if (total - page < 0) {
+    if (totalPage - currentPage < 0) {
       console.log('voce chegou ao final dos resultados');
       return;
     }
-    this.props.getAllBooksRequest({ search: 'design', page });
+    this.props.getBooksRequest({ search: 'design', currentPage });
+  };
+
+  navigateToDetails = (id) => {
+    this.props.history.push(`/detail/${id}`);
   };
 
   render() {
-    const { data, total } = this.props.books;
-    console.log(this.props.books);
+    const { loading, data } = this.props.books;
     return (
       <>
         <Header />
-        <div>
-          <span>{total}</span>
+        <SubHeader>
+          <div className="info">
+            <span>Total de livros: {data.length}</span>
+            {loading && <Loading />}
+          </div>
           <button type="button" onClick={this.handleGetMore}>
-            click
+            <MdAutorenew />
           </button>
-        </div>
+        </SubHeader>
         <Container>
           <ul>
             {data.map(book => (
               <li key={book.id}>
-                <Link to={`/detail/${book.id}`}>
+                <button type="button" onClick={() => this.navigateToDetails(book.id)}>
                   <img src={book.thumbnail} alt="logo" />
-                </Link>
+                </button>
               </li>
             ))}
           </ul>

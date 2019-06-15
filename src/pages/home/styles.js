@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const Container = styled.div`
+export const Container = styled.main`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -18,7 +18,7 @@ export const Container = styled.div`
     text-align: center;
   }
 
-  span {
+  p {
     color: #353535;
     margin-bottom: 20px;
   }

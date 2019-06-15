@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  func, shape, arrayOf, number, string,
+  shape, arrayOf, number, string,
 } from 'prop-types';
 
 import { connect } from 'react-redux';
@@ -13,7 +13,6 @@ import { Container } from './styles';
 
 class Detail extends Component {
   static propTypes = {
-    getOneBookRequest: func.isRequired,
     book: shape({
       id: string,
       title: string,
@@ -22,37 +21,42 @@ class Detail extends Component {
       thumbnail: string,
       averageRating: number,
       price: number,
+      pageCount: number,
     }).isRequired,
   };
 
-  state = {};
-
-  async componentDidMount() {
-    const { id } = this.props.match.params;
-    await this.props.getOneBookRequest({ id });
-  }
+  componentDidMount() {}
 
   render() {
     const { book } = this.props;
-    console.log(book);
     return (
       <>
         <Header goBack />
         <Container>
-          <h1>teste</h1>
+          <div className="bookContainer">
+            <div className="image">
+              <img src={book.thumbnail} alt="thumbnail" />
+            </div>
+            <div className="info">
+              <h1>{book.title}</h1>
+              <div>
+                <span>By </span>
+                {book.authors.map(author => (
+                  <span>{author}, </span>
+                ))}
+              </div>
+              <div className="price">
+                <strong>$ {book.price}</strong>
+              </div>
+              <span>{book.pageCount} pages</span>
+            </div>
+          </div>
+          <p>{book.description}</p>
         </Container>
       </>
     );
   }
 }
-
-Detail.propTypes = {
-  match: shape({
-    params: shape({
-      id: string,
-    }),
-  }).isRequired,
-};
 
 const mapStateToProps = state => ({
   book: state.books.selected,

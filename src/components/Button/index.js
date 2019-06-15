@@ -1,14 +1,12 @@
 import React from 'react';
 import { string, func } from 'prop-types';
 
-import { Container } from './styles';
+import { StyledButton } from './styles';
 
 const Button = ({ title, onClick }) => (
-  <Container>
-    <button type="button" onClick={onClick}>
-      {title}
-    </button>
-  </Container>
+  <StyledButton type="button" onClick={onClick}>
+    {title}
+  </StyledButton>
 );
 
 Button.propTypes = {

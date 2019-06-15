@@ -14,6 +14,10 @@ const GlobalStyle = createGlobalStyle`
   body > #root {
     height: 100vh;
   }
+
+  button {
+    cursor: pointer;
+  }
 `;
 
 export default GlobalStyle;
