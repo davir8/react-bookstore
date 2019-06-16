@@ -12,6 +12,18 @@ import { Creators as BooksActions } from '../../store/ducks/books';
 import { Container } from './styles';
 
 class Header extends Component {
+  static propTypes = {
+    history: shape({
+      goBack: func,
+    }).isRequired,
+    goBack: bool,
+    getBooksRequest: func.isRequired,
+  };
+
+  static defaultProps = {
+    goBack: false,
+  };
+
   state = {
     search: '',
   };
@@ -19,7 +31,7 @@ class Header extends Component {
   handleSearch = debounce(() => {
     const { search } = this.state;
 
-    this.props.getBooksRequest({ search });
+    this.props.getBooksRequest({ search, currentPage: 0, totalPage: 0 });
   }, 300);
 
   render() {
@@ -54,17 +66,6 @@ class Header extends Component {
     );
   }
 }
-
-Header.propTypes = {
-  history: shape({
-    goBack: func,
-  }).isRequired,
-  goBack: bool,
-};
-
-Header.defaultProps = {
-  goBack: false,
-};
 
 const mapDispatchToProps = dispatch => bindActionCreators(BooksActions, dispatch);
 

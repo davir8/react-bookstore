@@ -41,20 +41,16 @@ class List extends Component {
 
   handleGetMore = (e) => {
     e.preventDefault();
-    const { totalPage, currentPage, loading } = this.props.books;
+    const {
+      totalPage, currentPage, loading, search,
+    } = this.props.books;
 
     if (loading) {
       return;
     }
 
-    if (totalPage - currentPage < 0) {
-      this.props.getBooksFailure('End of results');
-      console.log('End of results');
-      return;
-    }
-
     if (e.target.scrollTop + e.target.clientHeight >= e.target.scrollHeight) {
-      this.props.getBooksRequest({ search: '', totalPage, currentPage });
+      this.props.getBooksRequest({ search, totalPage, currentPage });
     }
   };
 
@@ -72,11 +68,14 @@ class List extends Component {
             <span>Total of books: {data.length}</span>
             {loading && <Loading />}
           </div>
-          <button type="button" onClick={() => this.props.getBooksRequest({ search: '' })}>
+          <button
+            type="button"
+            onClick={() => this.props.getBooksRequest({ search: '', totalPage: 0, currentPage: 0 })}
+          >
             <MdAutorenew />
           </button>
         </SubHeader>
-        <Container onScroll={this.handleGetMore}>
+        <Container onScroll={data.length > 20 && !error ? this.handleGetMore : () => {}}>
           <ul>
             {data.map(book => (
               <li key={book.id}>

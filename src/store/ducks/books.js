@@ -17,18 +17,25 @@ const INITIAL_STATE = {
   currentPage: 0,
   totalPage: 0,
   error: null,
+  search: '',
 };
 
 export default function books(state = INITIAL_STATE, action) {
   switch (action.type) {
-    case Types.GET_REQUEST:
+    case Types.GET_REQUEST: {
+      const { search, currentPage, totalPage } = action.payload;
       return {
         ...state,
         loading: true,
+        error: '',
+        totalPage: totalPage === 0 ? 0 : state.totalPage,
+        data: totalPage === 0 && currentPage === 0 ? [] : state.data,
+        search: search !== '' ? search : state.search,
         currentPage: action.payload.currentPage,
       };
+    }
     case Types.GET_SUCCESS: {
-      const { currentPage, totalPage } = action.payload.data;
+      const { currentPage, totalPage, search } = action.payload.data;
 
       return {
         ...state,
@@ -36,7 +43,7 @@ export default function books(state = INITIAL_STATE, action) {
         currentPage,
         totalPage,
         data:
-          currentPage === 20
+          currentPage === 20 || search
             ? [...action.payload.data.books]
             : [...state.data, ...action.payload.data.books],
       };
@@ -53,9 +60,9 @@ export default function books(state = INITIAL_STATE, action) {
  * Actions
  */
 export const Creators = {
-  getBooksRequest: ({ search, currentPage = 0 }) => ({
+  getBooksRequest: ({ search, currentPage = 0, totalPage = 0 }) => ({
     type: Types.GET_REQUEST,
-    payload: { search, currentPage },
+    payload: { search, currentPage, totalPage },
   }),
 
   getBooksSuccess: data => ({
