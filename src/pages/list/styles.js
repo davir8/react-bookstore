@@ -28,8 +28,7 @@ export const Container = styled.main`
     flex-wrap: wrap;
 
     li {
-      margin-right: 10px;
-      margin-bottom: 20px;
+      margin: 10px;
       list-style: none;
       width: 170px;
       height: 230px;

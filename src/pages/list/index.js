@@ -3,7 +3,7 @@ import {
   func, shape, arrayOf, number, string,
 } from 'prop-types';
 
-import { MdAutorenew } from 'react-icons/lib/md';
+import { MdUndo } from 'react-icons/lib/md';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -72,7 +72,7 @@ class List extends Component {
             type="button"
             onClick={() => this.props.getBooksRequest({ search: '', totalPage: 0, currentPage: 0 })}
           >
-            <MdAutorenew />
+            <MdUndo /> Resetar
           </button>
         </SubHeader>
         <Container onScroll={data.length > 20 && !error ? this.handleGetMore : () => {}}>

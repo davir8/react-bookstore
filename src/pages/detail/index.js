@@ -82,7 +82,7 @@ class Detail extends Component {
                     starEmptyColor="rgba(142, 142, 142, 0.7)"
                     numberOfStars={5}
                     starDimension="20px"
-                    starSpacing={0}
+                    starSpacing="0px"
                     name="rating"
                   />
                 </div>
