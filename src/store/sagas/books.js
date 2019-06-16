@@ -15,15 +15,9 @@ export function* getBooks(action) {
 
     const books = data.items.map(book => ({
       id: book.id,
-      title: book.volumeInfo.title,
-      description: book.volumeInfo.description || null,
-      authors: book.volumeInfo.authors || [book.volumeInfo.publisher],
-      averageRating: book.volumeInfo.averageRating || null,
       thumbnail: book.volumeInfo.imageLinks
         ? book.volumeInfo.imageLinks.thumbnail
         : 'https://www.floresebombons.com.br/sem_foto.jpg',
-      price: book.saleInfo.listPrice ? book.saleInfo.listPrice.amount : null,
-      pageCount: book.volumeInfo.pageCount,
     }));
 
     yield put(
@@ -35,7 +29,5 @@ export function* getBooks(action) {
     );
   } catch (err) {
     yield put(BookActions.getBookFailure(err));
-  } finally {
-    // yield put(ModalActions.closeModal());
   }
 }

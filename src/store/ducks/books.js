@@ -27,14 +27,20 @@ export default function books(state = INITIAL_STATE, action) {
         loading: true,
         currentPage: action.payload.currentPage,
       };
-    case Types.GET_SUCCESS:
+    case Types.GET_SUCCESS: {
+      const { currentPage, totalPage } = action.payload.data;
+
       return {
         ...state,
         loading: false,
-        currentPage: action.payload.data.currentPage,
-        totalPage: action.payload.data.totalPage,
-        data: [...state.data, ...action.payload.data.books],
+        currentPage,
+        totalPage,
+        data:
+          currentPage === 20
+            ? [...action.payload.data.books]
+            : [...state.data, ...action.payload.data.books],
       };
+    }
     case Types.GET_FAILURE:
       return { ...state, loading: false, error: action.payload.error };
 

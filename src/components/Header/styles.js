@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const Container = styled.div`
+export const Container = styled.header`
   font-size: 18px;
   display: flex;
   justify-content: space-between;
@@ -22,6 +22,9 @@ export const Container = styled.div`
         cursor: pointer;
       }
     }
+  }
+  .empty {
+    width: 170px;
   }
   .search {
     display: flex;

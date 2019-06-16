@@ -21,16 +21,21 @@ class Header extends Component {
             {goBack ? <MdKeyboardBackspace /> : <MdMenu />}
           </button>
         </div>
-        Design Books
-        <div className="search">
-          <MdSearch />
-          <input
-            type="text"
-            value={search}
-            onChange={e => this.setState({ search: e.target.value })}
-            placeholder="search"
-          />
-        </div>
+        <span>Design Books</span>
+
+        {goBack ? (
+          <div className="empty" />
+        ) : (
+          <div className="search">
+            <MdSearch />
+            <input
+              type="text"
+              value={search}
+              onChange={e => this.setState({ search: e.target.value })}
+              placeholder="search"
+            />
+          </div>
+        )}
       </Container>
     );
   }

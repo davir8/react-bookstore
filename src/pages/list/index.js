@@ -67,7 +67,7 @@ class List extends Component {
             <span>Total de livros: {data.length}</span>
             {loading && <Loading />}
           </div>
-          <button type="button" onClick={this.handleGetMore}>
+          <button type="button" onClick={() => this.props.getBooksRequest({ search: 'design' })}>
             <MdAutorenew />
           </button>
         </SubHeader>
