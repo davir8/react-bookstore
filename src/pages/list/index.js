@@ -36,10 +36,11 @@ class List extends Component {
   };
 
   componentDidMount() {
-    this.props.getBooksRequest({ search: 'design' });
+    this.props.getBooksRequest({ search: '' });
   }
 
-  handleGetMore = () => {
+  handleGetMore = (e) => {
+    e.preventDefault();
     const { totalPage, currentPage, loading } = this.props.books;
 
     if (loading) {
@@ -47,10 +48,14 @@ class List extends Component {
     }
 
     if (totalPage - currentPage < 0) {
-      console.log('voce chegou ao final dos resultados');
+      this.props.getBooksFailure('End of results');
+      console.log('End of results');
       return;
     }
-    this.props.getBooksRequest({ search: 'design', currentPage });
+
+    if (e.target.scrollTop + e.target.clientHeight >= e.target.scrollHeight) {
+      this.props.getBooksRequest({ search: '', totalPage, currentPage });
+    }
   };
 
   navigateToDetails = (id) => {
@@ -58,20 +63,20 @@ class List extends Component {
   };
 
   render() {
-    const { loading, data } = this.props.books;
+    const { loading, data, error } = this.props.books;
     return (
       <>
         <Header />
         <SubHeader>
           <div className="info">
-            <span>Total de livros: {data.length}</span>
+            <span>Total of books: {data.length}</span>
             {loading && <Loading />}
           </div>
-          <button type="button" onClick={() => this.props.getBooksRequest({ search: 'design' })}>
+          <button type="button" onClick={() => this.props.getBooksRequest({ search: '' })}>
             <MdAutorenew />
           </button>
         </SubHeader>
-        <Container>
+        <Container onScroll={this.handleGetMore}>
           <ul>
             {data.map(book => (
               <li key={book.id}>
@@ -81,6 +86,7 @@ class List extends Component {
               </li>
             ))}
           </ul>
+          {!!error && <p>{error}</p>}
         </Container>
       </>
     );

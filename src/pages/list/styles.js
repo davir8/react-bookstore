@@ -8,6 +8,10 @@ export const Container = styled.main`
   height: calc(100% - 80px);
   overflow-y: auto;
 
+  @media (max-width: 700px) {
+    padding: 20px 0 0;
+  }
+
   ${Spinner} {
     font-size: 48px;
   }
@@ -21,9 +25,6 @@ export const Container = styled.main`
 
   ul {
     display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
     flex-wrap: wrap;
 
     li {
@@ -59,6 +60,10 @@ export const SubHeader = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  @media (max-width: 700px) {
+    padding: 20px 0 0;
+  }
 
   div {
     display: flex;

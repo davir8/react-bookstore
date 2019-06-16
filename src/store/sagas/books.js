@@ -10,21 +10,24 @@ export function* getBooks(action) {
       api.get,
       `/volumes?q=design${
         search ? `+intitle:${search}` : ''
-      }&startIndex=${currentPage}&printType=books&maxResults=20&filter=paid-ebooks`,
+      }&startIndex=${currentPage}&printType=books&maxResults=40&filter=paid-ebooks&key=AIzaSyAnh6A8UYle3wNsSTztzzTgKKCHj2YGoUY`,
     );
 
-    const books = data.items.map(book => ({
-      id: book.id,
-      thumbnail: book.volumeInfo.imageLinks
-        ? book.volumeInfo.imageLinks.thumbnail
-        : 'https://www.floresebombons.com.br/sem_foto.jpg',
-    }));
+    let books = [];
+    if (data.totalItems > 1) {
+      books = data.items.map(book => ({
+        id: book.id,
+        thumbnail: book.volumeInfo.imageLinks
+          ? book.volumeInfo.imageLinks.thumbnail
+          : 'https://www.floresebombons.com.br/sem_foto.jpg',
+      }));
+    }
 
     yield put(
       BookActions.getBooksSuccess({
         books,
         totalPage: data.totalItems,
-        currentPage: action.payload.currentPage + 20,
+        currentPage: action.payload.currentPage + 40,
       }),
     );
   } catch (err) {
